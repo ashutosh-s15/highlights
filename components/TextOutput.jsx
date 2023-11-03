@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-const TextOutput = ({ text, handleExtract }) => {
+const TextOutput = ({ text, handleExtract, isExtractingHighlights }) => {
   const [copied, setCopied] = useState('');
 
   const handleCopy = () => {
@@ -26,9 +26,11 @@ const TextOutput = ({ text, handleExtract }) => {
 
           <div className="flex flex-col">
             <h3 className="font-satoshi font-semibold text-gray-900">
-              Model: text-davinci-002
+              Model: whisper-1
             </h3>
-            <p className="font-inter text-sm text-gray-500">Confidence: 12</p>
+            <p className="font-inter text-sm text-gray-500">
+              Length: {text.length}
+            </p>
           </div>
         </div>
 
@@ -46,10 +48,22 @@ const TextOutput = ({ text, handleExtract }) => {
         </div>
       </div>
 
-      <p className="my-4 font-satoshi text-sm text-gray-700">{text}</p>
+      <p className="h-[75%] overflow-y-auto my-4 font-satoshi text-sm text-gray-700">
+        {text}
+      </p>
       {handleExtract && (
         <button className="mt-5 w-full cta_btn" onClick={handleExtract}>
-          Create Highlights
+          {isExtractingHighlights ? (
+            <Image
+              src="assets/icons/button-loader.svg"
+              width={20}
+              height={20}
+              alt="loader"
+              className="object-contain"
+            />
+          ) : (
+            'Create Highlights'
+          )}
         </button>
       )}
     </div>

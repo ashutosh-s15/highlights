@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-const HighlightsCard = ({ keyPoints }) => {
+const HighlightsCard = ({ keyPoints, isExtractingHighlights }) => {
   const [copied, setCopied] = useState('');
 
   const handleCopy = () => {
@@ -48,13 +48,25 @@ const HighlightsCard = ({ keyPoints }) => {
       </div>
 
       {keyPoints && keyPoints?.length > 0 ? (
-        <ul className="my-4 font-satoshi text-sm text-gray-700">
+        <ul className="h-[75%] overflow-y-auto my-4 font-satoshi text-sm text-gray-700">
           {keyPoints.map((str, index) => (
             <li key={index}>{str}</li>
           ))}
         </ul>
+      ) : isExtractingHighlights ? (
+        <div className="h-[75%] flex-center">
+          <Image
+            src="assets/icons/loader.svg"
+            width={80}
+            height={80}
+            alt="loader"
+            className="object-contain"
+          />
+        </div>
       ) : (
-        <p className="my-4 font-satoshi text-sm text-gray-700">Key Notes...</p>
+        <p className="h-[75%] my-4 font-satoshi text-sm text-gray-700">
+          Key Notes...
+        </p>
       )}
       <button className="mt-5 w-full cta_btn" onClick={() => {}}>
         Export

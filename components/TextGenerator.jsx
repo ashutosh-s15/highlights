@@ -3,10 +3,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 import { textOutputAtom } from '@atoms/textOutput';
+import Image from 'next/image';
 
 const TextGenerator = () => {
   const [formData, setFormData] = useState(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [textOutput, setTextOutput] = useAtom(textOutputAtom);
   const router = useRouter();
 
@@ -23,7 +25,8 @@ const TextGenerator = () => {
     setIsButtonDisabled(false);
   };
 
-  const generateText = async () => {
+  const extractText = async () => {
+    setIsLoading(true);
     try {
       const res = await fetch(
         'https://api.openai.com/v1/audio/transcriptions',
@@ -45,6 +48,7 @@ const TextGenerator = () => {
     } catch (e) {
       console.log(e);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -66,10 +70,20 @@ const TextGenerator = () => {
         className={`mt-5 w-full cta_btn ${
           isButtonDisabled ? 'bg-gradient-gray-300' : ''
         }`}
-        onClick={generateText}
+        onClick={extractText}
         disabled={isButtonDisabled}
       >
-        Create
+        {isLoading ? (
+          <Image
+            src="assets/icons/button-loader.svg"
+            width={20}
+            height={20}
+            alt="loader"
+            className="object-contain"
+          />
+        ) : (
+          'Upload'
+        )}
       </button>
     </div>
   );

@@ -12,8 +12,10 @@ const text =
 const CreateHighlights = () => {
   const [keyPoints, setKeyPoints] = useState([]);
   const [textOutput] = useAtom(textOutputAtom);
+  const [isExtractingHighlights, setIsExtractingHighlights] = useState(false);
 
   const handleExtract = async () => {
+    setIsExtractingHighlights(true);
     try {
       const response = await fetch('/api/highlights', {
         method: 'POST',
@@ -31,11 +33,19 @@ const CreateHighlights = () => {
     } catch (e) {
       console.log(e);
     }
+    setIsExtractingHighlights(false);
   };
   return (
     <div className="md:flex w-full">
-      <TextOutput text={textOutput} handleExtract={handleExtract} />
-      <HighlightsCard keyPoints={keyPoints} />
+      <TextOutput
+        text={textOutput}
+        handleExtract={handleExtract}
+        isExtractingHighlights={isExtractingHighlights}
+      />
+      <HighlightsCard
+        keyPoints={keyPoints}
+        isExtractingHighlights={isExtractingHighlights}
+      />
     </div>
   );
 };
