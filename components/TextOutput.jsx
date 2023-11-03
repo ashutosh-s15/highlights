@@ -17,11 +17,11 @@ const TextOutput = ({ text, handleExtract, isExtractingHighlights }) => {
       <div className="flex justify-between items-start gap-5">
         <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
           <Image
-            src="/assets/images/logo.svg"
+            src="/assets/icons/text.png"
             alt="logo"
             width={40}
             height={40}
-            className="rounded-full object-contain"
+            className="object-contain"
           />
 
           <div className="flex flex-col">
