@@ -5,9 +5,7 @@ import { useAtom } from 'jotai';
 import { textOutputAtom } from '@atoms/textOutput';
 import TextOutput from '@components/TextOutput';
 import HighlightsCard from '@components/HighlightsCard';
-
-const text =
-  "Hey Rahul, Manish here. Hi Manish, what's up. So I called to talk about the trip's location. I've been thinking, and what do you reckon about Hawaii for our next adventure? It has those beautiful beaches, lush jungles, and incredible volcanoes. Yes, I think that will be great. Hawaii offers a perfect mix of relaxation and adventure. We can lounge on the pristine beaches, go hiking in the rainforests, and even explore some fascinating volcanic landscapes. It's a diverse destination with plenty of activities to choose from. But, just to make sure, are there any other places you had in mind? I'm open to suggestions and want this trip to be amazing for both of us.";
+import TextGenerator from '@components/TextGenerator';
 
 const CreateHighlights = () => {
   const [keyPoints, setKeyPoints] = useState([]);
@@ -35,6 +33,17 @@ const CreateHighlights = () => {
     }
     setIsExtractingHighlights(false);
   };
+
+  if (!textOutput)
+    return (
+      <div className="w-full flex-center flex-col">
+        <h1 className="mt-5 text-3xl font-bold leading-[1.15] text-black sm:text-4xl text-center">
+          Upload audio to create highlights
+        </h1>
+        <TextGenerator />
+      </div>
+    );
+
   return (
     <div className="md:flex w-full">
       <TextOutput
