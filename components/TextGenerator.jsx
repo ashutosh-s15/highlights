@@ -1,12 +1,16 @@
 'use client';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAtom } from 'jotai';
+import { textOutputAtom } from '@atoms/textOutput';
 
 const TextGenerator = () => {
   const [formData, setFormData] = useState(null);
-  const [output, setOutput] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [textOutput, setTextOutput] = useAtom(textOutputAtom);
+  const router = useRouter();
 
-  const getInput = e => {
+  const getAudioInput = e => {
     const target = e.target;
     const file = target.files[0];
 
@@ -31,19 +35,22 @@ const TextGenerator = () => {
           body: formData,
         }
       );
-
       const data = await res.json();
-      console.log('Data: ', data);
-      setOutput(data.text);
+
+      // navigate to create highlights page
+      if (res.ok) {
+        setTextOutput(data.text);
+        router.push('/create-highlights');
+      }
     } catch (e) {
-      console.log('error: ', e);
+      console.log(e);
     }
   };
 
   return (
     <div className="flex flex-col items-center p-16">
       <input
-        onChange={getInput}
+        onChange={getAudioInput}
         type="file"
         className="block w-full text-sm text-slate-500
           file:mr-4 file:py-2 file:px-4
@@ -52,6 +59,7 @@ const TextGenerator = () => {
           file:bg-black file:text-white
           hover:file:bg-[#1975D4] hover:file:text-black
           hover:file:bg-opacity-25  hover:cursor-pointer
+          hover:file:cursor-pointer
         "
       />
       <button
