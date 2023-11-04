@@ -10,7 +10,10 @@ import {
   Button,
   Divider,
   Input,
+  Slider,
+  Tooltip,
 } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 import { highlightsPayloadAtom } from '@atoms/highlightsPayload';
 import { languageOptions } from '@languages';
@@ -18,10 +21,12 @@ import { languageOptions } from '@languages';
 const TextOutput = ({ text, handleExtract, isExtractingHighlights }) => {
   const [copied, setCopied] = useState('');
   const [length, setLength] = useState(null);
+  const [temperature, setTemperature] = useState(null);
   const [selectedKeys, setSelectedKeys] = useState(new Set(['english']));
   const [highlightsPayload, setHighlightsPayload] = useAtom(
     highlightsPayloadAtom
   );
+  const router = useRouter();
 
   const selectedValue = useMemo(
     () => Array.from(selectedKeys).join(', ').replaceAll('_', ' '),
@@ -33,8 +38,9 @@ const TextOutput = ({ text, handleExtract, isExtractingHighlights }) => {
     setHighlightsPayload({
       language: lang,
       tokenLength: Number(length),
+      temperature,
     });
-  }, [selectedKeys, length]);
+  }, [selectedKeys, length, temperature]);
 
   const handleCopy = () => {
     setCopied(text);
@@ -78,7 +84,7 @@ const TextOutput = ({ text, handleExtract, isExtractingHighlights }) => {
         </div>
       </div>
 
-      <p className="h-[60%] overflow-y-auto my-4 font-satoshi text-sm text-gray-700">
+      <p className="h-[16rem] overflow-y-auto my-4 font-satoshi text-sm text-gray-700">
         {text}
       </p>
 
@@ -122,21 +128,62 @@ const TextOutput = ({ text, handleExtract, isExtractingHighlights }) => {
         />
       </div>
 
-      {handleExtract && (
-        <button className="mt-5 w-full cta_btn" onClick={handleExtract}>
-          {isExtractingHighlights ? (
-            <Image
-              src="assets/icons/button-loader.svg"
-              width={20}
-              height={20}
-              alt="loader"
-              className="object-contain"
-            />
-          ) : (
-            'Create Highlights'
-          )}
+      <Slider
+        size="sm"
+        step={0.1}
+        color="foreground"
+        label={
+          <span className="flex">
+            <span className="mr-1">Temperature</span>
+            <Tooltip
+              content="The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic."
+              size="md"
+              offset={-7}
+              placement="bottom"
+              showArrow
+              isDismissable
+              className="max-w-[16rem] p-3"
+            >
+              <Image
+                src="assets/icons/info.svg"
+                alt="info"
+                width={16}
+                height={16}
+              />
+            </Tooltip>
+          </span>
+        }
+        showSteps={true}
+        maxValue={1}
+        minValue={0}
+        defaultValue={0}
+        className="max-w-md my-3 font-satoshi text-sm text-gray-700"
+        onChangeEnd={setTemperature}
+      />
+
+      <div className="flex items-center">
+        {handleExtract && (
+          <button className="cta_btn mr-3" onClick={handleExtract}>
+            {isExtractingHighlights ? (
+              <span className="flex-center flex-wrap">
+                <Image
+                  src="assets/icons/button-loader.svg"
+                  width={20}
+                  height={20}
+                  alt="loader"
+                  className="object-contain"
+                />
+                Transcribing...
+              </span>
+            ) : (
+              'Create Highlights'
+            )}
+          </button>
+        )}
+        <button className="black_btn" onClick={() => router.push('/')}>
+          Upload New Audio
         </button>
-      )}
+      </div>
     </div>
   );
 };

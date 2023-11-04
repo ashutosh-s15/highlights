@@ -24,6 +24,7 @@ const CreateHighlights = () => {
           model: 'gpt-3.5-turbo-instruct',
           language: highlightsPayload.language,
           tokenLength: highlightsPayload.tokenLength,
+          temperature: highlightsPayload.temperature,
         }),
       });
       const data = await response.json();
