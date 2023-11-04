@@ -163,7 +163,7 @@ const TextOutput = ({ text, handleExtract, isExtractingHighlights }) => {
 
       <div className="flex items-center">
         {handleExtract && (
-          <button className="cta_btn mr-3" onClick={handleExtract}>
+          <button className="primary_btn mr-3" onClick={handleExtract}>
             {isExtractingHighlights ? (
               <span className="flex-center flex-wrap">
                 <Image

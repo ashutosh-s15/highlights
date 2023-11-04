@@ -72,7 +72,7 @@ const HighlightsCard = ({ keyPoints, isExtractingHighlights }) => {
           Key Notes...
         </p>
       )}
-      <button className="mt-5 w-full cta_btn" onClick={() => {}}>
+      <button className="mt-5 w-full primary_btn" onClick={() => {}}>
         Export
       </button>
     </div>

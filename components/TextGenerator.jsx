@@ -56,8 +56,8 @@ const TextGenerator = () => {
       <input
         onChange={getAudioInput}
         type="file"
-        className="block w-full text-sm text-slate-500
-          file:mr-4 file:py-2 file:px-4
+        className="block w-full p-1 rounded-full text-sm text-slate-500 bg-gray-200
+          file:py-2 file:px-4
           file:rounded-full file:border-none
           file:text-sm file:font-semibold
           file:bg-black file:text-white
@@ -76,13 +76,13 @@ const TextGenerator = () => {
         {isLoading ? (
           <Image
             src="assets/icons/button-loader.svg"
-            width={20}
-            height={20}
+            width={32}
+            height={32}
             alt="loader"
             className="object-contain"
           />
         ) : (
-          'Upload'
+          'Transcribe'
         )}
       </button>
     </div>

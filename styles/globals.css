@@ -75,7 +75,7 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #e6e4ea;
   margin: 4px;
 }
 
@@ -97,6 +97,10 @@
 }
 
 .cta_btn {
+  @apply rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 py-3 px-6 text-white transition-all hover:bg-black text-center text-2xl font-inter font-semibold flex items-center justify-center;
+}
+
+.primary_btn {
   @apply rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 py-2 px-5 text-white transition-all hover:bg-black text-center text-sm font-inter flex items-center justify-center;
 }
 
