@@ -13,7 +13,6 @@ const HighlightsCard = ({ keyPoints, isExtractingHighlights }) => {
     setTimeout(() => setCopied(''), 3000);
   };
 
-  console.log('key: ', keyPoints);
   return (
     <div className="highlights_card">
       <div className="flex justify-between items-start gap-5">
@@ -30,7 +29,9 @@ const HighlightsCard = ({ keyPoints, isExtractingHighlights }) => {
             <h3 className="font-satoshi font-semibold text-gray-900">
               Model: text-davinci-002
             </h3>
-            <p className="font-inter text-sm text-gray-500">Confidence: 12</p>
+            <p className="font-inter text-sm text-gray-500">
+              Length: {keyPoints ? keyPoints.join('\n')?.length : '0'}
+            </p>
           </div>
         </div>
 

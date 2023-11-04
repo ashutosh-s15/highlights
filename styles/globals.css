@@ -67,6 +67,29 @@
   }
 }
 
+/* Scrollbar styles*/
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  margin: 4px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 /* Tailwind Styles */
 
 .app {
@@ -150,7 +173,7 @@
 
 /* TextResult Component */
 .text_result {
-  @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 backdrop-blur-lg backdrop-filter md:w-[360px] w-full h-[70vh] md:m-[12px];
+  @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 backdrop-blur-lg backdrop-filter md:w-[360px] w-full md:h-[70vh] md:m-[12px];
 }
 
 /* HighlightsCard Component */

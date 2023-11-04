@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useAtom } from 'jotai';
 import { textOutputAtom } from '@atoms/textOutput';
+import { highlightsPayloadAtom } from '@atoms/highlightsPayload';
 import TextOutput from '@components/TextOutput';
 import HighlightsCard from '@components/HighlightsCard';
 import TextGenerator from '@components/TextGenerator';
@@ -10,6 +11,7 @@ import TextGenerator from '@components/TextGenerator';
 const CreateHighlights = () => {
   const [keyPoints, setKeyPoints] = useState([]);
   const [textOutput] = useAtom(textOutputAtom);
+  const [highlightsPayload] = useAtom(highlightsPayloadAtom);
   const [isExtractingHighlights, setIsExtractingHighlights] = useState(false);
 
   const handleExtract = async () => {
@@ -19,7 +21,9 @@ const CreateHighlights = () => {
         method: 'POST',
         body: JSON.stringify({
           text: textOutput,
-          model: 'text-davinci-002',
+          model: 'gpt-3.5-turbo-instruct',
+          language: highlightsPayload.language,
+          tokenLength: highlightsPayload.tokenLength,
         }),
       });
       const data = await response.json();
