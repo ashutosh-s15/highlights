@@ -100,7 +100,6 @@ const TextOutput = ({ text, handleExtract, isExtractingHighlights }) => {
             aria-label="Single selection example"
             variant="flat"
             disallowEmptySelection
-            sc
             selectionMode="single"
             selectedKeys={selectedKeys}
             onSelectionChange={setSelectedKeys}
@@ -142,7 +141,7 @@ const TextOutput = ({ text, handleExtract, isExtractingHighlights }) => {
               placement="bottom"
               showArrow
               isDismissable
-              className="max-w-[16rem] p-3"
+              className="tootip"
             >
               <Image
                 src="assets/icons/info.svg"

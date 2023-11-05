@@ -149,7 +149,7 @@
 }
 
 .tootip {
-  @apply max-w-[18rem] p-3 font-satoshi font-medium;
+  @apply max-w-[18rem] p-3 font-satoshi font-extralight;
 }
 
 /* Feed Component */
@@ -186,7 +186,7 @@
 
 /* HighlightsCard Component */
 .highlights_card {
-  @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 backdrop-blur-lg backdrop-filter md:w-[360px] w-full h-[70vh] md:m-[12px];
+  @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 backdrop-blur-lg backdrop-filter md:w-[360px] w-full md:min-h-[70vh] h-fit my-4 md:m-[12px];
 }
 
 .flex-center {
