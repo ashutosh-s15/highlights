@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Tooltip } from '@nextui-org/react';
 import { useAtom } from 'jotai';
 import { textOutputAtom } from '@atoms/textOutput';
 import Image from 'next/image';
@@ -66,25 +67,32 @@ const TextGenerator = () => {
           hover:file:cursor-pointer
         "
       />
-      <button
-        className={`mt-5 w-full cta_btn ${
-          isButtonDisabled ? 'bg-gradient-gray-300' : ''
-        }`}
-        onClick={extractText}
-        disabled={isButtonDisabled}
+
+      <Tooltip
+        content="Please upload an audio for transcribing."
+        size="md"
+        offset={-7}
+        placement="bottom"
+        className={`tootip ${!isButtonDisabled && 'hidden'}`}
       >
-        {isLoading ? (
-          <Image
-            src="assets/icons/button-loader.svg"
-            width={32}
-            height={32}
-            alt="loader"
-            className="object-contain"
-          />
-        ) : (
-          'Transcribe'
-        )}
-      </button>
+        <button
+          className="mt-5 w-full cta_btn"
+          onClick={extractText}
+          disabled={isButtonDisabled}
+        >
+          {isLoading ? (
+            <Image
+              src="assets/icons/button-loader.svg"
+              width={32}
+              height={32}
+              alt="loader"
+              className="object-contain"
+            />
+          ) : (
+            'Transcribe'
+          )}
+        </button>
+      </Tooltip>
     </div>
   );
 };
