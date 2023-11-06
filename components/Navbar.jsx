@@ -11,10 +11,13 @@ import {
   DropdownItem,
   Avatar,
 } from '@nextui-org/react';
+import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
   const { data: session } = useSession();
   const [providers, setProviders] = useState(null);
+  const pathname = usePathname();
+  const isMyHighlightsPage = pathname === '/my-highlights';
 
   useEffect(() => {
     (async () => {
@@ -40,7 +43,12 @@ const Navbar = () => {
       <div className="sm:flex hidden">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
-            <Link href="/" className="black_btn">
+            {isMyHighlightsPage && (
+              <Link href="/" className="primary_btn">
+                Create
+              </Link>
+            )}
+            <Link href="/my-highlights" className="black_btn">
               My Highlights
             </Link>
 
@@ -48,7 +56,7 @@ const Navbar = () => {
               Sign Out
             </button>
 
-            <Link href="/profile">
+            <Link href="/">
               <Image
                 src={session?.user.image}
                 width={37}
@@ -91,7 +99,7 @@ const Navbar = () => {
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions" variant="flat">
               <DropdownItem key="my_highlights">
-                <Link href="/">My Highlights</Link>
+                <Link href="/my-highlights">My Highlights</Link>
               </DropdownItem>
               <DropdownItem key="signout" color="danger" onClick={signOut}>
                 Sign Out
