@@ -12,6 +12,7 @@ import {
   Divider,
 } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
+import { toast } from 'react-toastify';
 
 const exportFormats = ['txt', 'docx'];
 
@@ -83,10 +84,11 @@ const HighlightsCard = ({ keyPoints, isExtractingHighlights }) => {
       });
 
       if (response.ok) {
-        console.log('saved!');
+        toast.success('Highlight saved successfully!');
       }
     } catch (error) {
       console.log(error);
+      toast.error('Failed to save Highlight. Please try again.');
     } finally {
       setIsSaving(false);
     }

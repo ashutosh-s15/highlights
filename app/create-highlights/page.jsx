@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { useAtom } from 'jotai';
+import { toast } from 'react-toastify';
+import Toast from '@components/common/Toast';
 import { textOutputAtom } from '@atoms/textOutput';
 import { highlightsPayloadAtom } from '@atoms/highlightsPayload';
 import TextOutput from '@components/TextOutput';
@@ -28,13 +30,14 @@ const CreateHighlights = () => {
         }),
       });
       const data = await response.json();
-      console.log('data: ', data);
+
       if (response.ok && Array.isArray(data.points)) {
         setKeyPoints(data.points);
-        /* todo: add success toast */
+        toast.success('Highlights created!');
       }
     } catch (e) {
       console.log(e);
+      toast.error('Failed to create Highlight. Please try again.');
     }
     setIsExtractingHighlights(false);
   };
@@ -51,6 +54,7 @@ const CreateHighlights = () => {
 
   return (
     <div className="md:flex w-full">
+      <Toast />
       <TextOutput
         text={textOutput}
         handleExtract={handleExtract}
