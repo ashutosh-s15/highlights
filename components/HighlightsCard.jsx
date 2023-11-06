@@ -11,11 +11,14 @@ import {
   Button,
   Divider,
 } from '@nextui-org/react';
+import { useSession } from 'next-auth/react';
 
 const exportFormats = ['txt', 'docx'];
 
 const HighlightsCard = ({ keyPoints, isExtractingHighlights }) => {
+  const { data: session } = useSession();
   const [copied, setCopied] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState(new Set(['txt']));
   const selectedFormat = useMemo(
     () => Array.from(selectedKeys).join(', ').replaceAll('_', ' '),
@@ -62,10 +65,31 @@ const HighlightsCard = ({ keyPoints, isExtractingHighlights }) => {
     link.click();
   };
 
-  const handleHighlightsExport = () => {
-    console.log('exporting');
+  const handleHighlightExport = () => {
     const highlights = keyPoints.join('\n');
     if (highlights) exportTextData(highlights, selectedFormat);
+  };
+
+  const handleHighlightSave = async () => {
+    setIsSaving(true);
+    console.log('saving');
+    try {
+      const response = await fetch('/api/highlights/save', {
+        method: 'POST',
+        body: JSON.stringify({
+          userId: session?.user.id,
+          keyPoints,
+        }),
+      });
+
+      if (response.ok) {
+        console.log('saved!');
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -130,9 +154,31 @@ const HighlightsCard = ({ keyPoints, isExtractingHighlights }) => {
 
       <Divider className="my-4" />
       <div className="flex items-center font-satoshi text-sm text-gray-700">
+        {session?.user && keyPoints && keyPoints?.length > 0 && (
+          <>
+            <button className="outline_btn" onClick={handleHighlightSave}>
+              {isSaving ? (
+                <span className="flex-center flex-wrap">
+                  <Image
+                    src="assets/icons/button-loader.svg"
+                    width={20}
+                    height={20}
+                    alt="loader"
+                    className="object-contain"
+                  />
+                  Saving...
+                </span>
+              ) : (
+                'Save'
+              )}
+            </button>
+            <Divider orientation="vertical" className="mx-2" />
+          </>
+        )}
+
         <Dropdown>
           <DropdownTrigger>
-            <Button variant="bordered" className="capitalize rounded-lg mr-4">
+            <Button variant="bordered" className="capitalize rounded-lg mr-3">
               Format: {selectedFormat}
             </Button>
           </DropdownTrigger>
@@ -150,7 +196,7 @@ const HighlightsCard = ({ keyPoints, isExtractingHighlights }) => {
             ))}
           </DropdownMenu>
         </Dropdown>
-        <button className="black_btn" onClick={handleHighlightsExport}>
+        <button className="black_btn mr-4" onClick={handleHighlightExport}>
           Export{' '}
           {
             <Image
