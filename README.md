@@ -6,20 +6,68 @@ A web app that allows users to effortlessly distill insights from calls & audio 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Development
+
+### Setup
+
+1. Clone the repo into a public GitHub repository.
+
+   ```bash
+   git clone https://github.com/ashutosh-s15/highlights.git
+   ```
+
+2. Go to the project folder
+
+   ```bash
+   cd highlights
+   ```
+
+3. Install packages with yarn
+
+   ```bash
+   yarn
+   ```
+
+4. Set up your `.env` file
+
+   - Duplicate `.env.example` to `.env`
+   - Use `openssl rand -base64 32` to generate a key and add it under `NEXTAUTH_SECRET` in the `.env` file.
+   - Create a Open API key by heading over to [here](https://openai.com/) and add it under `NEXT_PUBLIC_OPENAI_API_KEY` in the `.env` file.
+   - Get your `OAuth Id` and `client secret` from [here](https://developers.google.com/identity/protocols/oauth2) and add it under `GOOGLE_ID` and `GOOGLE_CLIENT_SECRET`.
+   - Get a MongoDB connection URI. You can either run a local cluster or provision one from [here](https://www.mongodb.com/atlas/database) and add it under `MONGODB_URI`.
+
+5. Setup Node
+   If your Node version does not meet the project's requirements as instructed by the docs, "nvm" (Node Version Manager) allows using Node at the version required by the project:
+
+   ```bash
+   nvm use
+   ```
+
+   You first might need to install the specific version and then use it:
+
+   ```bash
+   nvm install && nvm use
+   ```
+
+   You can install nvm from [here](https://github.com/nvm-sh/nvm).
+
+   ```bash
+   yarn dev
+   ```
+
+   ## Getting Started
 
 First, run the development server:
 
-bash
+```bash
 npm run dev
-
 # or
-
 yarn dev
-
 # or
-
 pnpm dev
+# or
+bun dev
+```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
@@ -42,53 +90,3 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-## Development
-
-### Setup
-
-1. Clone the repo into a public GitHub repository.
-
-   sh
-   git clone https://github.com/ashutosh-s15/highlights.git
-
-2. Go to the project folder
-
-   sh
-   cd highlights
-
-3. Install packages with yarn
-
-   sh
-   yarn
-
-4. Set up your `.env` file
-
-   - Duplicate `.env.example` to `.env`
-   - Use `openssl rand -base64 32` to generate a key and add it under `NEXTAUTH_SECRET` in the `.env` file.
-   - Create a Open API key by heading over to [here](https://openai.com/) and add it under `NEXT_PUBLIC_OPENAI_API_KEY` in the `.env` file.
-   - Get your `OAuth Id` and `client secret` from [here](https://developers.google.com/identity/protocols/oauth2) and add it under `GOOGLE_ID` and `GOOGLE_CLIENT_SECRET`.
-   - Get a MongoDB connection URI. You can either run a local cluster or provision one from [here](https://www.mongodb.com/atlas/database) and add it under `MONGODB_URI`.
-
-5. Setup Node
-   If your Node version does not meet the project's requirements as instructed by the docs, "nvm" (Node Version Manager) allows using Node at the version required by the project:
-
-   sh
-   nvm use
-
-   You first might need to install the specific version and then use it:
-
-   sh
-   nvm install && nvm use
-
-   You can install nvm from [here](https://github.com/nvm-sh/nvm).
-
-   sh
-   yarn dev
-
-   ```
-
-   ```
-
-```
-
-```
