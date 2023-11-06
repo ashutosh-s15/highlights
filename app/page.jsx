@@ -12,8 +12,8 @@ const Home = () => {
         </span>
       </h1>
       <p className="desc text-center">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates,
-        autem! Vel, veniam iusto?
+        Effortlessly distill insights from calls & audio in 180+ languages.
+        Share & save key points with ease.
       </p>
 
       <TextGenerator />
