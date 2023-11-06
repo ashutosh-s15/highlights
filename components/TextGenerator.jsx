@@ -57,6 +57,7 @@ const TextGenerator = () => {
       <input
         onChange={getAudioInput}
         type="file"
+        accept="audio/*"
         className="block w-full p-1 rounded-full text-sm text-slate-500 bg-gray-200
           file:py-2 file:px-4
           file:rounded-full file:border-none

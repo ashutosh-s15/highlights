@@ -1,5 +1,3 @@
-'use client';
-
 import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import { Document, Paragraph, Packer, TextRun } from 'docx';
@@ -11,15 +9,11 @@ import {
   Button,
   Divider,
 } from '@nextui-org/react';
-import { useSession } from 'next-auth/react';
-import { toast } from 'react-toastify';
 
 const exportFormats = ['txt', 'docx'];
 
-const HighlightsCard = ({ keyPoints, isExtractingHighlights }) => {
-  const { data: session } = useSession();
+const SavedHighlight = ({ userId, keyPoints }) => {
   const [copied, setCopied] = useState('');
-  const [isSaving, setIsSaving] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState(new Set(['txt']));
   const selectedFormat = useMemo(
     () => Array.from(selectedKeys).join(', ').replaceAll('_', ' '),
@@ -71,29 +65,6 @@ const HighlightsCard = ({ keyPoints, isExtractingHighlights }) => {
     if (highlights) exportTextData(highlights, selectedFormat);
   };
 
-  const handleHighlightSave = async () => {
-    setIsSaving(true);
-    console.log('saving');
-    try {
-      const response = await fetch('/api/highlights/save', {
-        method: 'POST',
-        body: JSON.stringify({
-          userId: session?.user.id,
-          keyPoints,
-        }),
-      });
-
-      if (response.ok) {
-        toast.success('Highlight saved successfully!');
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error('Failed to save Highlight. Please try again.');
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
   return (
     <div className="highlights_card">
       <div className="flex justify-between items-start gap-5">
@@ -132,17 +103,7 @@ const HighlightsCard = ({ keyPoints, isExtractingHighlights }) => {
         )}
       </div>
 
-      {isExtractingHighlights ? (
-        <div className="h-[22rem] flex-center my-4">
-          <Image
-            src="assets/icons/loader.svg"
-            width={80}
-            height={80}
-            alt="loader"
-            className="object-contain"
-          />
-        </div>
-      ) : keyPoints && keyPoints?.length > 0 ? (
+      {keyPoints && keyPoints?.length > 0 ? (
         <ul className="h-[22rem] overflow-y-auto my-4 font-satoshi text-sm text-gray-700">
           {keyPoints.map((str, index) => (
             <li key={index}>{str}</li>
@@ -156,28 +117,6 @@ const HighlightsCard = ({ keyPoints, isExtractingHighlights }) => {
 
       <Divider className="my-4" />
       <div className="flex items-center font-satoshi text-sm text-gray-700">
-        {session?.user && keyPoints && keyPoints?.length > 0 && (
-          <>
-            <button className="outline_btn" onClick={handleHighlightSave}>
-              {isSaving ? (
-                <span className="flex-center flex-wrap">
-                  <Image
-                    src="assets/icons/button-loader.svg"
-                    width={20}
-                    height={20}
-                    alt="loader"
-                    className="object-contain"
-                  />
-                  Saving...
-                </span>
-              ) : (
-                'Save'
-              )}
-            </button>
-            <Divider orientation="vertical" className="mx-2" />
-          </>
-        )}
-
         <Dropdown>
           <DropdownTrigger>
             <Button variant="bordered" className="capitalize rounded-lg mr-3">
@@ -215,4 +154,4 @@ const HighlightsCard = ({ keyPoints, isExtractingHighlights }) => {
   );
 };
 
-export default HighlightsCard;
+export default SavedHighlight;
